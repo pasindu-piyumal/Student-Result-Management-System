@@ -1,0 +1,42 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <h2 class="mb-4"><i class="fas fa-edit"></i>Edit Student Class</h2>
+
+    {% if messages %}
+
+    {% for m in messages %}
+
+    <div class="alert alert-{% if m.tags == 'error' %}danger{% else %}{{m.tags}}{% endif %} alert-dismissible fade show" role="alert">
+        {{m}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    {% endfor %}
+
+    {% endif %}
+
+    <form action="" method="post">
+        {% csrf_token %} 
+        <div class="mb-3">
+            <label for="classname" class="form-label">Edit Class Name</label>
+            <input type="text" class="form-control" id="classname" name="classname" placeholder="e.g., First , Second , Sixth" value="{{ class_object.class_name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="classnamenumeric" class="form-label">Edit Class Name in Numeric</label>
+            <input type="text" class="form-control" id="classnamenumeric" name="classnamenumeric" placeholder="e.g., 1 , 2 , 6" value="{{class_object.class_numeric}}" required>
+        </div>
+        <div class="mb-3">
+            <label for="section" class="form-label">Edit Section</label>
+            <input type="text" class="form-control" id="section" name="section" placeholder="e.g., A , B , C" value="{{class_object.section}}" required>
+        </div>
+        <button type="submit" class="btn btn-success">
+            <i class="fas fa-check me-1"></i>Submit
+        </button>
+    </form>
+</div>
+
+{% endblock %}
