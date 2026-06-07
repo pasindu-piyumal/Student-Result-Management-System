@@ -1,0 +1,74 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <h2 class="mb-4"><i class="fas fa-file-signature"></i>Add Result</h2>
+
+    {% if messages %}
+
+    {% for m in messages %}
+
+    <div class="alert alert-{% if m.tags == 'error' %}danger{% else %}{{m.tags}}{% endif %} alert-dismissible fade show" role="alert">
+        {{m}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    {% endfor %}
+    {% endif %}
+
+    <form action="" method="post">
+        {% csrf_token %} 
+        
+        <div class="mb-3">
+            <label for="class_id" class="form-label">Select Class</label>
+            <select class="form-select" id="class_id" name="class" required>
+            <option value="">-- Select Class --</option>
+
+                {% for c in classes %}
+
+                <option value="{{ c.id }}">{{ c.class_name }} - Section {{ c.class_numeric }}</option>
+
+                {% endfor %}
+
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="student_id" class="form-label">Select Student</label>
+            <select class="form-select" id="student_id" name="studentid" required>
+            <option value="">-- Select Student --</option>
+
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <i class="fas fa-check me-1"></i>Submit
+        </button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('class_id').addEventListener('change', function(){
+        const classId = this.value;
+
+        if(!classId) return;
+
+        fetch(`/get_student_subjects/?class_id=${classId}`)
+        .then(response => response.json())
+        .then(data=>{
+            const studentSelect = document.getElementById('student_id');
+            studentSelect.innerHTML = '<option value="">-- Select Student --</option>';
+
+            data.students.forEach(student => {
+                const opt = document.createElement('option');
+                opt.value = student.id;
+                opt.text = `${student.name} (Roll ID ${student.id})`;
+                studentSelect.appendChild(opt);
+            });
+        });
+    });
+</script>
+
+{% endblock %}
