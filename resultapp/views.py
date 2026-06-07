@@ -326,3 +326,14 @@ def add_result(request):
     #         return redirect('add_notice')
     return render(request, 'add_result.html', locals())
 
+from django.http import JsonResponse
+def get_student_subjects(request):
+    class_id = request.GET.get('class_id')
+
+    if class_id:
+        students = list(Student.objects.filter(student_class_id=class_id).values('id', 'name', 'id'))
+        subject_combinations = list(SubjectCombination.objects.filter(student_class_id=class_id, status=1).select_related('subject'))
+
+        subjects = [{'id': sc.subject.id, 'name': sc.subject.subject_name} for sc in subject_combinations]
+        return JsonResponse({'students': students, 'subjects': subjects})
+    return JsonResponse({'students': [], 'subjects': []})
