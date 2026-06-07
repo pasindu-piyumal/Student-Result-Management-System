@@ -306,3 +306,23 @@ def edit_notice(request, notice_id):
             messages.error(request, f'Something went wrong: {str(e)}')
             return redirect('edit_notice', notice_id=notice_id)
     return render(request, 'edit_notice.html', locals())
+
+
+@login_required
+def add_result(request):
+    students = Student.objects.all()
+    classes = Class.objects.all()
+    subjects = Subject.objects.all()
+    # if request.method == 'POST':
+    #     try:
+    #         title = request.POST.get('title')
+    #         detail = request.POST.get('detail')
+    #         Notice.objects.create(title=title, detail=detail)
+    #         messages.success(request, 'Notice added successfully')
+    #         return redirect('add_notice')
+
+    #     except Exception as e:
+    #         messages.error(request, f'Something went wrong: {str(e)}')
+    #         return redirect('add_notice')
+    return render(request, 'add_result.html', locals())
+
