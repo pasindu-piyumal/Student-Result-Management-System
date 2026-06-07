@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from resultapp.views import edit_notice, index, admin_login, admin_dashboard, create_class, admin_logout, manage_class, edit_class, create_subject, manage_subject, edit_subject, create_subject_combination,manage_subject_combination, add_student, manage_student, edit_student, add_notice, manage_notice
+from resultapp.views import edit_notice, index, admin_login, admin_dashboard, create_class, admin_logout, manage_class, edit_class, create_subject, manage_subject, edit_subject, create_subject_combination,manage_subject_combination, add_student, manage_student, edit_student, add_notice, manage_notice, add_result, get_student_subjects
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,4 +38,6 @@ urlpatterns = [
     path('add_notice/', add_notice, name='add_notice'),
     path('manage_notice/', manage_notice, name='manage_notice'),
     path('edit_notice/<int:notice_id>/', edit_notice, name='edit_notice'),
+    path('add_result/', add_result, name='add_result'),
+    path('get_student_subjects/', get_student_subjects, name='get_student_subjects'),
 ]
