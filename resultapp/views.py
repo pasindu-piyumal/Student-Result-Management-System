@@ -310,20 +310,21 @@ def edit_notice(request, notice_id):
 
 @login_required
 def add_result(request):
-    students = Student.objects.all()
-    classes = Class.objects.all()
-    subjects = Subject.objects.all()
-    # if request.method == 'POST':
-    #     try:
-    #         title = request.POST.get('title')
-    #         detail = request.POST.get('detail')
-    #         Notice.objects.create(title=title, detail=detail)
-    #         messages.success(request, 'Notice added successfully')
-    #         return redirect('add_notice')
 
-    #     except Exception as e:
-    #         messages.error(request, f'Something went wrong: {str(e)}')
-    #         return redirect('add_notice')
+    if request.method == 'POST':
+        try:
+            class_id = request.POST.get('class')
+            student_id = request.POST.get('student_id')
+            marks = {key.split('_')[1]: value for key, value in request.POST.items() if key.startswith('marks_')}
+            for subject_id, mark in marks.items():
+                Result.objects.create(student_id=student_id, student_class_id=class_id, subject_id=subject_id, marks=mark)
+
+            messages.success(request, 'Result added successfully')
+            return redirect('add_result')
+
+        except Exception as e:
+            messages.error(request, f'Something went wrong: {str(e)}')
+            return redirect('add_result')
     return render(request, 'add_result.html', locals())
 
 from django.http import JsonResponse
