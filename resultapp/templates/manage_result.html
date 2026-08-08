@@ -1,0 +1,198 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+    <h2 class="mb-4">
+        <i class="fas fa-chart-line"></i>
+        Manage Results
+    </h2>
+
+
+    <!-- Messages -->
+    {% if messages %}
+
+        {% for m in messages %}
+
+            <div class="alert alert-{% if m.tags == 'error' %}danger{% else %}{{m.tags}}{% endif %} alert-dismissible fade show">
+
+                {{ m }}
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+                </button>
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+    <!-- Class Selection -->
+
+    <form method="GET">
+
+        <div class="mb-4">
+
+            <label class="form-label">
+                <strong>Select Class</strong>
+            </label>
+
+            <select
+                name="class_id"
+                id="class_id"
+                class="form-select"
+                onchange="this.form.submit()"
+            >
+
+                <option value="">
+                    -- Select Class --
+                </option>
+
+                {% for c in classes %}
+
+                    <option
+                        value="{{ c.id }}"
+                        {% if selected_class == c.id|stringformat:"s" %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ c.class_name }} - Section {{ c.section }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+    </form>
+
+
+    {% if selected_class %}
+
+    {% if students_results %}
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>Serial No.</th>
+                        <th>Student Name</th>
+                        <th>Student ID</th>
+                        <th>Subjects & Marks</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for item in students_results %}
+
+                        <tr>
+
+                            <td>
+                                {{ forloop.counter }}
+                            </td>
+
+                            <td>
+                                {{ item.student.name }}
+                            </td>
+
+                            <td>
+                                {{ item.student.id }}
+                            </td>
+
+                            <td>
+
+                                {% for result in item.results %}
+
+                                    <div class="mb-1">
+
+                                        <strong>
+                                            {{ result.subject.subject_name }}:
+                                        </strong>
+
+                                        {% if result.marks >= 75 %}
+
+                                            <span class="badge bg-success">
+                                                {{ result.marks }}
+                                            </span>
+
+                                        {% elif result.marks >= 50 %}
+
+                                            <span class="badge bg-warning text-dark">
+                                                {{ result.marks }}
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="badge bg-danger">
+                                                {{ result.marks }}
+                                            </span>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </td>
+
+                            <td>
+
+                                {% for result in item.results %}
+
+                                    <a
+                                        href="{% url 'edit_result' result.id %}"
+                                        class="btn btn-info btn-sm mb-1"
+                                    >
+                                        EDIT {{ result.subject.subject_name }}
+                                    </a>
+
+                                    <a
+                                        href="{% url 'delete_result' result.id %}"
+                                        onclick="return confirm('Are you sure you want to delete this result?')"
+                                        class="btn btn-danger btn-sm mb-1"
+                                    >
+                                        DELETE
+                                    </a>
+
+                                    <br>
+
+                                {% endfor %}
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    {% else %}
+
+        <div class="alert alert-info">
+            No results found for this class.
+        </div>
+
+    {% endif %}
+
+{% endif %}
+
+</div>
+
+{% endblock %}
