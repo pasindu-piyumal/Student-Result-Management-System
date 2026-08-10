@@ -2,8 +2,384 @@
 
 {%  block content %}
 
+<style>
+    /* ==========================================
+   NOTICE BOARD
+========================================== */
 
-        
+.notice-section {
+    background: #f5f6f8;
+}
+
+
+/* Heading */
+
+.notice-heading .notice-icon {
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #212529;
+    color: #ffffff;
+
+    border-radius: 50%;
+
+    font-size: 21px;
+}
+
+.notice-heading h2 {
+    font-size: 30px;
+    font-weight: 600;
+
+    color: #212529;
+
+    margin-bottom: 8px;
+}
+
+.notice-heading p {
+    color: #6c757d;
+
+    margin-bottom: 0;
+
+    font-size: 15px;
+}
+
+
+/* Main Board */
+
+.notice-board {
+    max-width: 1050px;
+
+    margin: 0 auto;
+
+    background: #ffffff;
+
+    border: 1px solid #d9dde2;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Board Header */
+
+.notice-board-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 17px 22px;
+
+    background: #212529;
+
+    color: #ffffff;
+
+    border-bottom: 3px solid #495057;
+
+    font-size: 17px;
+
+    font-weight: 600;
+}
+
+.notice-board-header span {
+    font-size: 13px;
+
+    font-weight: 400;
+
+    color: #ced4da;
+}
+
+
+/* Board Body */
+
+.notice-board-body {
+    background: #ffffff;
+
+    padding: 0 20px;
+}
+
+
+/* Scroll area */
+
+.notice-scroll {
+    max-height: 380px;
+
+    overflow-y: auto;
+}
+
+
+/* Scrollbar */
+
+.notice-scroll::-webkit-scrollbar {
+    width: 7px;
+}
+
+.notice-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.notice-scroll::-webkit-scrollbar-thumb {
+    background: #adb5bd;
+
+    border-radius: 10px;
+}
+
+.notice-scroll::-webkit-scrollbar-thumb:hover {
+    background: #6c757d;
+}
+
+
+/* Individual Notice */
+
+.notice-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 20px 5px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    transition: background-color 0.2s ease;
+}
+
+.notice-item:last-child {
+    border-bottom: none;
+}
+
+.notice-item:hover {
+    background: #f8f9fa;
+}
+
+
+/* Date */
+
+.notice-date {
+    width: 75px;
+
+    min-width: 75px;
+
+    height: 75px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #f1f3f5;
+
+    border: 1px solid #dee2e6;
+
+    border-radius: 6px;
+
+    text-align: center;
+}
+
+.date-day {
+    display: block;
+
+    font-size: 25px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    color: #212529;
+}
+
+.date-month {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 12px;
+
+    color: #6c757d;
+
+    text-transform: uppercase;
+}
+
+
+/* Notice Content */
+
+.notice-content {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.notice-content h5 {
+    margin: 0 0 6px;
+
+    color: #212529;
+
+    font-size: 17px;
+
+    font-weight: 600;
+}
+
+.notice-content p {
+    margin: 0 0 7px;
+
+    color: #6c757d;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+.notice-content small {
+    color: #868e96;
+
+    font-size: 12px;
+}
+
+
+/* Action */
+
+.notice-action {
+    width: 110px;
+
+    min-width: 110px;
+
+    text-align: right;
+}
+
+.notice-action .btn {
+    border-radius: 5px;
+
+    padding: 7px 13px;
+
+    font-size: 13px;
+}
+
+
+/* Empty State */
+
+.empty-notice {
+    text-align: center;
+
+    padding: 55px 20px;
+
+    color: #6c757d;
+}
+
+.empty-notice i {
+    font-size: 40px;
+
+    margin-bottom: 15px;
+
+    color: #adb5bd;
+}
+
+.empty-notice h5 {
+    color: #495057;
+
+    margin-bottom: 5px;
+}
+
+.empty-notice p {
+    margin-bottom: 0;
+
+    font-size: 14px;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .notice-board-header {
+        display: block;
+
+        text-align: center;
+    }
+
+    .notice-board-header span {
+        display: block;
+
+        margin-top: 5px;
+    }
+
+    .notice-item {
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .notice-date {
+        width: 65px;
+
+        min-width: 65px;
+
+        height: 65px;
+    }
+
+    .date-day {
+        font-size: 21px;
+    }
+
+    .notice-action {
+        width: auto;
+
+        min-width: auto;
+    }
+
+    .notice-action .btn {
+        font-size: 12px;
+    }
+
+}
+
+
+@media (max-width: 576px) {
+
+    .notice-board-body {
+        padding: 0 12px;
+    }
+
+    .notice-item {
+        flex-wrap: wrap;
+    }
+
+    .notice-content {
+        width: calc(100% - 80px);
+    }
+
+    .notice-action {
+        width: 100%;
+
+        text-align: left;
+
+        margin-left: 80px;
+    }
+
+    .notice-heading h2 {
+        font-size: 25px;
+    }
+
+}
+
+</style>
+
+    <main>    
         <header class="py-5 bg-dark text-white">
             <div class="container text-center">
                 <h1 class="display-4 fw-bold">Student Result Management</h1>
@@ -11,30 +387,419 @@
             </div>
         </header>
 
-        <section class="py-5 ">
-            <div class="container">
-                <h2 class="text-center mb-4"><i class="fas fa-bullhorn"></i>Notice Board</h2>
-                <div class="border p-3 rounded bg-light">
-                    <marquee behavior="" direction="up" scrollamount="2" onmouseover="this.stop()" onmouseleave="this.start()">
-                        <ul class="list-unstyled">
-                            <li class="mb-2">
-                                <a href="notice1.html" target="_blank">
-                                    <i class="fas fa-angle-right text-primary"></i>
-                                        Notice Title 1
-                                </a>
-                            </li>
-                            <li class="mb-2">
-                                <a href="notice2.html" target="_blank">
-                                    <i class="fas fa-angle-right text-primary"></i>
-                                    Notice Title 2
-                                </a>
-                            </li>
-                        </ul>
-                    </marquee>
-                </div>
+        <section class="notice-section py-5">
+
+    <div class="container">
+
+        <div class="notice-heading text-center mb-4">
+
+            <div class="notice-icon">
+                <i class="fas fa-bullhorn"></i>
             </div>
-        </section>
+
+            <h2>
+                Notice Board
+            </h2>
+
+            <p>
+                Official announcements and important information
+            </p>
+
+        </div>
+
+
+        <div class="notice-board">
+
+            <div class="notice-board-header">
+
+                <div>
+                    <i class="fas fa-bullhorn me-2"></i>
+                    Official Notices
+                </div>
+
+                <span>
+                    Latest Announcements
+                </span>
+
+            </div>
+
+
+            <div class="notice-board-body">
+
+                {% if notices %}
+
+                    <div class="notice-scroll">
+
+                        <ul class="list-unstyled mb-0">
+
+                            {% for notice in notices %}
+
+                                <li class="notice-item">
+
+                                    <!-- Date -->
+                                    <div class="notice-date">
+
+                                        <span class="date-day">
+                                            {{ notice.posting_date|date:"d" }}
+                                        </span>
+
+                                        <span class="date-month">
+                                            {{ notice.posting_date|date:"M Y" }}
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- Content -->
+                                    <div class="notice-content">
+
+                                        <h5>
+                                            {{ notice.title }}
+                                        </h5>
+
+                                        <p>
+                                            {{ notice.detail|truncatewords:15 }}
+                                        </p>
+
+                                        <small>
+
+                                            <i class="far fa-clock me-1"></i>
+
+                                            Posted:
+                                            {{ notice.posting_date|date:"F d, Y" }}
+
+                                        </small>
+
+
+                                        <!-- Deadline -->
+
+                                        {% if notice.deadline %}
+
+                                            <div
+                                                class="notice-countdown mt-2"
+                                                data-deadline="{{ notice.deadline|date:'c' }}"
+                                            >
+
+                                                <i class="fas fa-hourglass-half me-1"></i>
+
+                                                <span class="countdown-text">
+                                                    Calculating...
+                                                </span>
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <!-- Button -->
+
+                                    <div class="notice-action">
+
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-dark"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#notice{{ notice.id }}"
+                                        >
+
+                                            <i class="fas fa-eye me-1"></i>
+                                            View
+
+                                        </button>
+
+                                    </div>
+
+                                </li>
+
+                            {% endfor %}
+
+                        </ul>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-notice">
+
+                        <i class="fas fa-inbox"></i>
+
+                        <h5>
+                            No Notices Available
+                        </h5>
+
+                        <p>
+                            There are currently no official announcements.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+        {% for notice in notices %}
+
+        <div
+            class="modal fade"
+            id="notice{{ notice.id }}"
+            tabindex="-1"
+            aria-hidden="true"
+        >
+
+            <div class="modal-dialog modal-dialog-centered">
+
+                <div class="modal-content">
+
+                    <div class="modal-header bg-dark text-white">
+
+                        <h5 class="modal-title">
+
+                            <i class="fas fa-bullhorn me-2"></i>
+
+                            {{ notice.title }}
+
+                        </h5>
+
+                        <button
+                            type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                        ></button>
+
+                    </div>
+
+
+                    <div class="modal-body">
+
+                        <p>
+                            {{ notice.detail|linebreaks }}
+                        </p>
+
+                        <hr>
+
+                        <small class="text-muted">
+
+                            <i class="fas fa-calendar-alt me-1"></i>
+
+                            Posted:
+                            {{ notice.posting_date|date:"Y-m-d H:i" }}
+
+                        </small>
+
+                    </div>
+
+
+                    <div class="modal-footer">
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Close
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
     </main>
 
+    <script>
+
+        function updateCountdowns() {
+
+            /* Notice board countdowns */
+
+            const countdowns =
+                document.querySelectorAll(
+                    '.notice-countdown'
+                );
+
+
+            countdowns.forEach(function(element) {
+
+                const deadline =
+                    new Date(
+                        element.dataset.deadline
+                    ).getTime();
+
+                const now =
+                    new Date().getTime();
+
+                const difference =
+                    deadline - now;
+
+
+                const text =
+                    element.querySelector(
+                        '.countdown-text'
+                    );
+
+
+                /* Deadline expired */
+
+                if (difference <= 0) {
+
+                    text.innerHTML =
+                        'Deadline Passed';
+
+                    element.classList.add(
+                        'countdown-expired'
+                    );
+
+                    return;
+                }
+
+
+                /* Calculate time */
+
+                const days =
+                    Math.floor(
+                        difference /
+                        (1000 * 60 * 60 * 24)
+                    );
+
+
+                const hours =
+                    Math.floor(
+                        (difference %
+                        (1000 * 60 * 60 * 24)) /
+                        (1000 * 60 * 60)
+                    );
+
+
+                const minutes =
+                    Math.floor(
+                        (difference %
+                        (1000 * 60 * 60)) /
+                        (1000 * 60)
+                    );
+
+
+                const seconds =
+                    Math.floor(
+                        (difference %
+                        (1000 * 60)) /
+                        1000
+                    );
+
+
+                text.innerHTML =
+                    days + 'd ' +
+                    hours + 'h ' +
+                    minutes + 'm ' +
+                    seconds + 's remaining';
+
+            });
+
+
+            /* Modal countdowns */
+
+            const modalCountdowns =
+                document.querySelectorAll(
+                    '.modal-countdown'
+                );
+
+
+            modalCountdowns.forEach(function(element) {
+
+                const deadline =
+                    new Date(
+                        element.dataset.deadline
+                    ).getTime();
+
+                const now =
+                    new Date().getTime();
+
+                const difference =
+                    deadline - now;
+
+
+                const text =
+                    element.querySelector('span');
+
+
+                if (difference <= 0) {
+
+                    text.innerHTML =
+                        'Deadline Passed';
+
+                    element.classList.add(
+                        'countdown-expired'
+                    );
+
+                    return;
+                }
+
+
+                const days =
+                    Math.floor(
+                        difference /
+                        (1000 * 60 * 60 * 24)
+                    );
+
+
+                const hours =
+                    Math.floor(
+                        (difference %
+                        (1000 * 60 * 60 * 24)) /
+                        (1000 * 60 * 60)
+                    );
+
+
+                const minutes =
+                    Math.floor(
+                        (difference %
+                        (1000 * 60 * 60)) /
+                        (1000 * 60)
+                    );
+
+
+                const seconds =
+                    Math.floor(
+                        (difference %
+                        (1000 * 60)) /
+                        1000
+                    );
+
+
+                text.innerHTML =
+                    days + 'd ' +
+                    hours + 'h ' +
+                    minutes + 'm ' +
+                    seconds + 's remaining';
+
+            });
+
+        }
+
+
+        /* Run immediately */
+
+        updateCountdowns();
+
+
+        /* Update every second */
+
+        setInterval(
+            updateCountdowns,
+            1000
+        );
+
+    </script>
 
 {%  endblock %}

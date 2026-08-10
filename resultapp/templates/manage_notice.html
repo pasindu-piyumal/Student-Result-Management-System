@@ -3,55 +3,437 @@
 
 {% block content %}
 
-<div class="container">
-    <h2 class="mb-4"><i class="fas fa-bell fa-shake"></i>Manage Notices</h2>
+<div class="container-fluid py-4">
+
+    <!-- Page Header -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-semibold text-dark mb-1">
+
+                <i class="fas fa-bullhorn me-2"></i>
+                Manage Notices
+
+            </h2>
+
+            <p class="text-muted mb-0">
+                View, update, and manage official notices.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{% url 'add_notice' %}"
+            class="btn btn-dark"
+        >
+
+            <i class="fas fa-plus me-1"></i>
+            Add Notice
+
+        </a>
+
+    </div>
+
+
+    <!-- Messages -->
 
     {% if messages %}
 
-    {% for m in messages %}
+        {% for m in messages %}
 
-    <div class="alert alert-{% if m.tags == 'error' %}danger{% else %}{{m.tags}}{% endif %} alert-dismissible fade show" role="alert">
-        {{m}}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
+            <div
+                class="alert alert-{% if m.tags == 'error' %}danger{% else %}{{ m.tags }}{% endif %} alert-dismissible fade show"
+                role="alert"
+            >
 
-    {% endfor %}
+                <i class="fas fa-info-circle me-2"></i>
+
+                {{ m }}
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                ></button>
+
+            </div>
+
+        {% endfor %}
 
     {% endif %}
 
-    <table class="table table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th>Serial Number</th>
-                <th>Title</th>
-                <th>Detail</th>
-                <th>Posting Date</th>
-                <th>Update Date</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for notice in notices %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ notice.title }}</td>
-                <td>{{ notice.detail }}</td>
-                <td>{{ notice.posting_date }}</td>
-                <td>{{ notice.update_date }}</td>
-                <td>
-                    <a href="{% url 'edit_notice' notice.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i>EDIT</a>
-                    <a href="?delete={{notice.id}}" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i>DELETE</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="6" class="text-center">No Notices found</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 
+    <!-- Notice Table -->
+
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-header bg-dark text-white py-3">
+
+            <h5 class="mb-0">
+
+                <i class="fas fa-list me-2"></i>
+                Notice Records
+
+            </h5>
+
+        </div>
+
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover table-bordered align-middle mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th class="text-center">
+                                Notice.No
+                            </th>
+
+                            <th>
+                                Notice Title
+                            </th>
+
+                            <th>
+                                Details
+                            </th>
+
+                            <th>
+                                Posted Date
+                            </th>
+
+                            <th>
+                                Deadline
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Last Updated
+                            </th>
+
+                            <th class="text-center">
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for notice in notices %}
+
+                            <tr>
+
+                                <!-- Serial Number -->
+
+                                <td class="text-center fw-semibold">
+
+                                    {{ forloop.counter }}
+
+                                </td>
+
+
+                                <!-- Title -->
+
+                                <td>
+
+                                    <strong>
+                                        {{ notice.title }}
+                                    </strong>
+
+                                </td>
+
+
+                                <!-- Detail -->
+
+                                <td>
+
+                                    <span
+                                        class="text-muted"
+                                        title="{{ notice.detail }}"
+                                    >
+
+                                        {{ notice.detail|truncatewords:15 }}
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Posting Date -->
+
+                                <td>
+
+                                    <small>
+
+                                        <i class="far fa-calendar-alt me-1"></i>
+
+                                        {{ notice.posting_date|date:"M d, Y" }}
+
+                                        <br>
+
+                                        <span class="text-muted">
+
+                                            {{ notice.posting_date|date:"h:i A" }}
+
+                                        </span>
+
+                                    </small>
+
+                                </td>
+
+
+                                <!-- Deadline -->
+
+                                <td>
+
+                                    {% if notice.deadline %}
+
+                                        <small>
+
+                                            <i class="fas fa-hourglass-half me-1"></i>
+
+                                            {{ notice.deadline|date:"M d, Y" }}
+
+                                            <br>
+
+                                            <span class="text-muted">
+
+                                                {{ notice.deadline|date:"h:i A" }}
+
+                                            </span>
+
+                                        </small>
+
+                                    {% else %}
+
+                                        <span class="text-muted">
+                                            No deadline
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- Status -->
+
+                                <td>
+
+                                    {% if notice.deadline %}
+
+                                        <span
+                                            class="notice-status"
+                                            data-deadline="{{ notice.deadline|date:'c' }}"
+                                        >
+
+                                            <span class="badge bg-secondary">
+                                                Checking...
+                                            </span>
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge bg-secondary">
+                                            No Deadline
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- Update Date -->
+
+                                <td>
+
+                                    <small>
+
+                                        {{ notice.update_date|date:"M d, Y" }}
+
+                                        <br>
+
+                                        <span class="text-muted">
+
+                                            {{ notice.update_date|date:"h:i A" }}
+
+                                        </span>
+
+                                    </small>
+
+                                </td>
+
+
+                                <!-- Actions -->
+
+                                <td class="text-center">
+
+                                    <div class="d-flex justify-content-center gap-1">
+
+                                        <a
+                                            href="{% url 'edit_notice' notice.id %}"
+                                            class="btn btn-info btn-sm"
+                                            title="Edit Notice"
+                                        >
+
+                                            <i class="fas fa-edit"></i>
+
+                                        </a>
+
+
+                                        <a
+                                            href="?delete={{ notice.id }}"
+                                            onclick="return confirm('Are you sure you want to delete this notice?')"
+                                            class="btn btn-danger btn-sm"
+                                            title="Delete Notice"
+                                        >
+
+                                            <i class="fas fa-trash-alt"></i>
+
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+                        {% empty %}
+
+                            <tr>
+
+                                <td
+                                    colspan="8"
+                                    class="text-center py-5"
+                                >
+
+                                    <i class="fas fa-inbox fa-2x text-muted mb-3"></i>
+
+                                    <h6 class="text-muted">
+                                        No Notices Found
+                                    </h6>
+
+                                    <p class="text-muted mb-0">
+                                        There are currently no notices in the system.
+                                    </p>
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
+
+
+<!-- Deadline Status -->
+
+<script>
+
+function updateNoticeStatus() {
+
+    const notices =
+        document.querySelectorAll('.notice-status');
+
+
+    notices.forEach(function(element) {
+
+        const deadline =
+            new Date(
+                element.dataset.deadline
+            ).getTime();
+
+
+        const now =
+            new Date().getTime();
+
+
+        const difference =
+            deadline - now;
+
+
+        if (difference <= 0) {
+
+            element.innerHTML =
+                '<span class="badge bg-danger">' +
+                '<i class="fas fa-times-circle me-1"></i>' +
+                'Expired' +
+                '</span>';
+
+            return;
+        }
+
+
+        const days =
+            Math.floor(
+                difference /
+                (1000 * 60 * 60 * 24)
+            );
+
+
+        const hours =
+            Math.floor(
+                (difference %
+                (1000 * 60 * 60 * 24)) /
+                (1000 * 60 * 60)
+            );
+
+
+        if (days === 0 && hours < 24) {
+
+            element.innerHTML =
+                '<span class="badge bg-warning text-dark">' +
+                '<i class="fas fa-clock me-1"></i>' +
+                days + 'd ' +
+                hours + 'h left' +
+                '</span>';
+
+        } else {
+
+            element.innerHTML =
+                '<span class="badge bg-success">' +
+                '<i class="fas fa-check-circle me-1"></i>' +
+                days + 'd ' +
+                hours + 'h left' +
+                '</span>';
+
+        }
+
+    });
+
+}
+
+
+updateNoticeStatus();
+
+setInterval(
+    updateNoticeStatus,
+    60000
+);
+
+</script>
 
 {% endblock %}

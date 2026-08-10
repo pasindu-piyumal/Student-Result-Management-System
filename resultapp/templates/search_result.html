@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-6">
+
+            <div class="card shadow">
+
+                <div class="card-header text-center bg-dark text-white">
+
+                    <h4>
+                        <i class="fas fa-graduation-cap me-2"></i>
+                        Search Student Result
+                    </h4>
+
+                </div>
+
+
+                <div class="card-body p-4">
+
+
+                    <!-- Error / Success Messages -->
+
+                    {% if messages %}
+
+                        {% for message in messages %}
+
+                            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show">
+
+                                {{ message }}
+
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="alert">
+                                </button>
+
+                            </div>
+
+                        {% endfor %}
+
+                    {% endif %}
+
+
+                    <form
+                        action="{% url 'check_result' %}"
+                        method="POST"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <!-- Student ID -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="rollid"
+                                class="form-label"
+                            >
+
+                                <i class="fas fa-id-card me-1"></i>
+                                Student ID
+
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="rollid"
+                                name="rollid"
+                                placeholder="Enter Student ID"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Select Class -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="class"
+                                class="form-label"
+                            >
+
+                                <i class="fas fa-school me-1"></i>
+                                Select Class
+
+                            </label>
+
+
+                            <select
+                                class="form-select"
+                                id="class"
+                                name="class"
+                                required
+                            >
+
+                                <option value="">
+                                    -- Select Class --
+                                </option>
+
+
+                                {% for c in classes %}
+
+                                    <option value="{{ c.id }}">
+
+                                        {{ c.class_name }}
+                                        -
+                                        Section {{ c.section }}
+
+                                    </option>
+
+                                {% endfor %}
+
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Search Button -->
+
+                        <button
+                            type="submit"
+                            class="btn btn-success w-100"
+                        >
+
+                            <i class="fas fa-search me-2"></i>
+                            Search Result
+
+                        </button>
+
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

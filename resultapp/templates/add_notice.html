@@ -28,6 +28,21 @@
             <label for="detail" class="form-label">Detail</label>
             <textarea class="form-control" rows="5" id="detail" name="detail" placeholder="Enter Notice Detail" required></textarea>
         </div>
+        <div class="mb-4">
+            <label for="deadline" class="form-label fw-semibold">
+                <i class="fas fa-calendar-alt me-1"></i>
+                Deadline
+            </label>
+
+            <input type="datetime-local" class="form-control" id="deadline" name="deadline" required>
+
+            <div class="form-text">
+                Select the date and time by which the notice-related
+                activity must be completed.
+            </div>
+
+         </div>
+
 
         <button type="submit" class="btn btn-success">
             <i class="fas fa-check me-1"></i>Submit

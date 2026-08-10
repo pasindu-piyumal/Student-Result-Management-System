@@ -1,0 +1,447 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    @media print {
+
+        .no-print {
+            display: none !important;
+        }
+
+    }
+</style>
+
+<div class="container py-5">
+
+
+    <!-- Page Heading -->
+
+    <div class="text-center mb-4">
+
+        <h2>
+            <i class="fas fa-graduation-cap me-2"></i>
+            Student Result
+        </h2>
+
+        <p class="text-muted">
+            Academic Performance Report
+        </p>
+
+    </div>
+
+
+    <!-- Student Information -->
+
+    <div class="card shadow mb-4">
+
+        <div class="card-header bg-dark text-white">
+
+            <h5 class="mb-0">
+                <i class="fas fa-user me-2"></i>
+                Student Information
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <strong>Student Name:</strong>
+
+                    <br>
+
+                    {{ student.name }}
+
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    <strong>Student ID:</strong>
+
+                    <br>
+
+                    {{ student.id }}
+
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    <strong>Class:</strong>
+
+                    <br>
+
+                    {{ selected_class.class_name }}
+
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    <strong>Section:</strong>
+
+                    <br>
+
+                    {{ selected_class.section }}
+
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    <strong>Email:</strong>
+
+                    <br>
+
+                    {{ student.email }}
+
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    <strong>Gender:</strong>
+
+                    <br>
+
+                    {{ student.gender }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Subject Results -->
+
+    <div class="card shadow mb-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <h5 class="mb-0">
+
+                <i class="fas fa-book me-2"></i>
+                Subject Results
+
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Subject</th>
+
+                            <th>Marks</th>
+
+                            <th>Grade</th>
+
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for result in results %}
+
+                        <tr>
+
+                            <td>
+                                {{ forloop.counter }}
+                            </td>
+
+
+                            <td>
+
+                                {{ result.subject.subject_name }}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if result.marks >= 75 %}
+
+                                    <span class="badge bg-success">
+
+                                        {{ result.marks }}
+
+                                    </span>
+
+                                {% elif result.marks >= 40 %}
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        {{ result.marks }}
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-danger">
+
+                                        {{ result.marks }}
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if result.marks >= 75 %}
+
+                                    A
+
+                                {% elif result.marks >= 65 %}
+
+                                    B
+
+                                {% elif result.marks >= 55 %}
+
+                                    C
+
+                                {% elif result.marks >= 40 %}
+
+                                    S
+
+                                {% else %}
+
+                                    F
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if result.marks >= 40 %}
+
+                                    <span class="badge bg-success">
+
+                                        PASS
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-danger">
+
+                                        FAIL
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Summary -->
+
+    <div class="row g-4">
+
+
+        <!-- Total -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow text-center">
+
+                <div class="card-body">
+
+                    <i class="fas fa-calculator fa-2x mb-2"></i>
+
+                    <h6>Total Marks</h6>
+
+                    <h3>
+
+                        {{ total_marks }}
+                        /
+                        {{ max_total_marks }}
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Average -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow text-center">
+
+                <div class="card-body">
+
+                    <i class="fas fa-chart-line fa-2x mb-2"></i>
+
+                    <h6>Average Marks</h6>
+
+                    <h3>
+
+                        {{ average_marks }}
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Percentage -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow text-center">
+
+                <div class="card-body">
+
+                    <i class="fas fa-percentage fa-2x mb-2"></i>
+
+                    <h6>Percentage</h6>
+
+                    <h3>
+
+                        {{ percentage }}%
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- Final Result -->
+
+    <div class="card shadow mt-4">
+
+        <div class="card-body text-center">
+
+
+            <h5>
+                Overall Result
+            </h5>
+
+
+            <h1>
+
+                {% if status == 'PASS' %}
+
+                    <span class="badge bg-success">
+                        {{ status }}
+                    </span>
+
+                {% else %}
+
+                    <span class="badge bg-danger">
+                        {{ status }}
+                    </span>
+
+                {% endif %}
+
+            </h1>
+
+
+            <p class="mt-3 mb-1">
+
+                <strong>Overall Grade:</strong>
+
+                <span class="badge bg-primary">
+
+                    {{ grade }}
+
+                </span>
+
+            </p>
+
+
+            <p>
+
+                Failed Subjects:
+
+                <strong>
+                    {{ failed_subjects }}
+                </strong>
+
+            </p>
+
+
+        </div>
+
+    </div>
+
+    <!-- Buttons -->
+    <div class="text-center mt-4 no-print">
+
+        <a
+            href="{% url 'search_result' %}"
+            class="btn btn-secondary"
+        >
+            <i class="fas fa-arrow-left me-2"></i>
+            Search Another Student
+        </a>
+
+        <button
+            type="button"
+            onclick="window.print()"
+            class="btn btn-primary"
+        >
+            <i class="fas fa-print me-2"></i>
+            Print Result
+        </button>
+
+    </div>
+
+
+</div>
+
+{% endblock %}
