@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from resultapp.views import edit_notice, index, admin_login, admin_dashboard, create_class, admin_logout, manage_class, edit_class, create_subject, manage_subject, edit_subject, create_subject_combination,manage_subject_combination, add_student, manage_student, edit_student, add_notice, manage_notice, add_result, get_student_subjects
+from resultapp.views import edit_notice, index, admin_login, admin_dashboard, create_class, admin_logout, manage_class, edit_class, create_subject, manage_subject, edit_subject, create_subject_combination,manage_subject_combination, add_student, manage_student, edit_student, add_notice, manage_notice, add_result, get_student_subjects, manage_result, edit_result, delete_result, change_password, search_result, check_result
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -40,4 +40,10 @@ urlpatterns = [
     path('edit_notice/<int:notice_id>/', edit_notice, name='edit_notice'),
     path('add_result/', add_result, name='add_result'),
     path('get_student_subjects/', get_student_subjects, name='get_student_subjects'),
+    path('manage_result/', manage_result, name='manage_result'),
+    path('edit_result/<int:result_id>/', edit_result, name='edit_result'),
+    path('delete_result/<int:result_id>/', delete_result, name='delete_result'),
+    path('change_password/', change_password, name='change_password'),
+    path('search_result/', search_result, name='search_result'),
+    path('check_result/', check_result, name='check_result'),
 ]
