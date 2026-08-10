@@ -1,0 +1,17 @@
+# Python / Bytecode
+__pycache__/
+*.py[cod]
+
+# Django local database
+db.sqlite3
+
+# Environment variables / Secrets
+.env
+
+# IDEs
+.vscode/
+.idea/
+
+# OS specific
+.DS_Store
+Thumbs.db
